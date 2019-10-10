@@ -14,10 +14,10 @@ class EventLoop {
 
             System.out.println("Got event: " + currentEvent);
             if (eventType == LIGHT_ON || eventType == LIGHT_OFF) {
-                Light.Switch(eventObjectId, eventType, smartHome);
+                new LightEvent(eventType, eventObjectId).Switch(smartHome);
             }
             if (eventType == DOOR_OPEN || eventType == DOOR_CLOSED) {
-                Door.Switch(eventObjectId, eventType, smartHome);
+                new DoorEvent(eventType, eventObjectId).Switch(smartHome);
             }
             currentEvent = SensorEvent.getNextSensorEvent();
         }
