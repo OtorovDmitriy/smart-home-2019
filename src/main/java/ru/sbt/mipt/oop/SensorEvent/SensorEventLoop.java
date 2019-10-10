@@ -1,11 +1,13 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.SensorEvent;
 
-import static ru.sbt.mipt.oop.SensorEventType.*;
-import static ru.sbt.mipt.oop.SensorEventType.DOOR_CLOSED;
+import ru.sbt.mipt.oop.SmartHome;
 
-class EventLoop {
+import static ru.sbt.mipt.oop.SensorEvent.SensorEventType.*;
+import static ru.sbt.mipt.oop.SensorEvent.SensorEventType.DOOR_CLOSED;
 
-    static void Handling(SensorEvent event, SmartHome smartHome) {
+public class SensorEventLoop {
+
+    public static void Handling(SensorEvent event, SmartHome smartHome) {
         SensorEvent currentEvent = event;
 
         while (currentEvent != null) {
@@ -14,10 +16,10 @@ class EventLoop {
 
             System.out.println("Got event: " + currentEvent);
             if (eventType == LIGHT_ON || eventType == LIGHT_OFF) {
-                new LightEvent(eventType, eventObjectId).Switch(smartHome);
+                new SensorEventLight(eventType, eventObjectId).Switch(smartHome);
             }
             if (eventType == DOOR_OPEN || eventType == DOOR_CLOSED) {
-                new DoorEvent(eventType, eventObjectId).Switch(smartHome);
+                new SensorEventDoor(eventType, eventObjectId).Switch(smartHome);
             }
             currentEvent = SensorEvent.getNextSensorEvent();
         }

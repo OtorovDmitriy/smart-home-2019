@@ -1,10 +1,12 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.SensorEvent;
 
-import static ru.sbt.mipt.oop.SensorEventType.LIGHT_ON;
+import ru.sbt.mipt.oop.*;
 
-public class LightEvent extends SensorEvent {
+import static ru.sbt.mipt.oop.SensorEvent.SensorEventType.LIGHT_ON;
 
-    public LightEvent(SensorEventType type, String ObjectId) {
+public class SensorEventLight extends SensorEvent {
+
+    public SensorEventLight(SensorEventType type, String ObjectId) {
         super(type, ObjectId);
     }
 

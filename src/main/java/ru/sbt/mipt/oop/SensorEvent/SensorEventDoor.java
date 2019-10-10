@@ -1,9 +1,11 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.SensorEvent;
 
-import static ru.sbt.mipt.oop.SensorEventType.DOOR_OPEN;
+import ru.sbt.mipt.oop.*;
 
-public class DoorEvent extends SensorEvent {
-    public DoorEvent(SensorEventType type, String objectId) {
+import static ru.sbt.mipt.oop.SensorEvent.SensorEventType.DOOR_OPEN;
+
+public class SensorEventDoor extends SensorEvent {
+    public SensorEventDoor(SensorEventType type, String objectId) {
         super(type, objectId);
     }
 
@@ -19,7 +21,7 @@ public class DoorEvent extends SensorEvent {
                         System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
 
                         if (room.getName().equals("hall")) {
-                            LightEvent.SwitchAllLights(smartHome);
+                            SensorEventLight.SwitchAllLights(smartHome);
                         }
                     }
                 }
