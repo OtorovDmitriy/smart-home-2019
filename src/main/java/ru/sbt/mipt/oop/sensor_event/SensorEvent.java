@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.SensorEvent;
+package ru.sbt.mipt.oop.sensor_event;
 
 public class SensorEvent {
     private final SensorEventType type;
@@ -15,13 +15,6 @@ public class SensorEvent {
 
     public String getObjectId() {
         return objectId;
-    }
-
-    public static SensorEvent getNextSensorEvent() {
-        if (Math.random() < 0.05) return null;
-        SensorEventType sensorEventType = SensorEventType.values()[(int) (4 * Math.random())];
-        String objectId = "" + ((int) (10 * Math.random()));
-        return new SensorEvent(sensorEventType, objectId);
     }
 
     @Override

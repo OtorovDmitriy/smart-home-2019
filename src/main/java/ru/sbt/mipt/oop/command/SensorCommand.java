@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.command;
 
 public class SensorCommand {
     private final CommandType type;
@@ -7,10 +7,6 @@ public class SensorCommand {
     public SensorCommand(CommandType type, String objectId) {
         this.type = type;
         this.objectId = objectId;
-    }
-
-    public static void sendCommand(SensorCommand command) {
-        System.out.println("Pretent we're sending command " + command);
     }
 
     @Override
