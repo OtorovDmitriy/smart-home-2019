@@ -1,5 +1,6 @@
 package ru.sbt.mipt.oop;
 
+import ru.sbt.mipt.oop.event_processor.Action;
 import ru.sbt.mipt.oop.room_elements.Door;
 import ru.sbt.mipt.oop.room_elements.Light;
 
@@ -26,5 +27,17 @@ public class Room {
 
     public String getName() {
         return name;
+    }
+
+    void execute(Action action) {
+        action.execute(this);
+
+        for (Light light : lights) {
+            light.execute(action);
+        }
+
+        for (Door door : doors) {
+            door.execute(action);
+        }
     }
 }
