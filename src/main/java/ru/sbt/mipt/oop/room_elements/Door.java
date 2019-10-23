@@ -5,6 +5,7 @@ import ru.sbt.mipt.oop.event_processor.Actionable;
 
 public class Door implements Actionable {
     private final String id;
+
     private boolean isOpen;
 
     public Door(boolean isOpen, String id) {
@@ -18,6 +19,10 @@ public class Door implements Actionable {
 
     public void setOpen(boolean open) {
         isOpen = open;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
     }
 
     @Override
