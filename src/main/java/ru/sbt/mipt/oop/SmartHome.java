@@ -8,13 +8,15 @@ import java.util.Collection;
 
 public class SmartHome implements Actionable {
     Collection<Room> rooms;
+    String activationCode;
 
     public SmartHome() {
         rooms = new ArrayList<>();
     }
 
-    public SmartHome(Collection<Room> rooms) {
+    public SmartHome(Collection<Room> rooms, String activationCode) {
         this.rooms = rooms;
+        this.activationCode = activationCode;
     }
 
     public void addRoom(Room room) {
@@ -32,5 +34,10 @@ public class SmartHome implements Actionable {
         for (Room room : rooms) {
             room.execute(action);
         }
+    }
+
+    @Override
+    public String toString() {
+        return activationCode;
     }
 }

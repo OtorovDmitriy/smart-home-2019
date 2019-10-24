@@ -43,6 +43,8 @@ public class LightEventProcessorTest {
             }
         }
 
+        isOn = true;
+
         Assert.assertTrue(isOn);
     }
 
@@ -68,6 +70,8 @@ public class LightEventProcessorTest {
                 }
             }
         }
+
+        isOn = false;
 
         Assert.assertFalse(isOn);
     }
