@@ -13,7 +13,7 @@ public class LightEventProcessor implements EventProcessor {
     @Override
     public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
 
-        if (smartHome.getAlarmActivated()) {
+        if (smartHome.getAlarm().getAlarmActivatedStatus()) {
             System.out.println("Sending sms...");
             return;
         }
