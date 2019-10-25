@@ -80,6 +80,5 @@
       ],
       "name": "hall"
     }
-  ],
-  "activationCode": "C6C26169C5A745419521560F53FD951F"
+  ]
 }

@@ -7,16 +7,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class SmartHome implements Actionable {
-    Collection<Room> rooms;
-    String activationCode;
+    private Collection<Room> rooms;
+
+    private String AlarmActivationCode;
+
+    private Boolean alarmActivated = false;
 
     public SmartHome() {
         rooms = new ArrayList<>();
     }
 
-    public SmartHome(Collection<Room> rooms, String activationCode) {
+    public SmartHome(Collection<Room> rooms) {
         this.rooms = rooms;
-        this.activationCode = activationCode;
     }
 
     public void addRoom(Room room) {
@@ -27,6 +29,22 @@ public class SmartHome implements Actionable {
         return rooms;
     }
 
+    public String getAlarmActivationCode() {
+        return AlarmActivationCode;
+    }
+
+    public void setAlarmActivationCode(String alarmActivationCode) {
+        AlarmActivationCode = alarmActivationCode;
+    }
+
+    public Boolean getAlarmActivated() {
+        return alarmActivated;
+    }
+
+    public void setAlarmActivated(Boolean alarmActivated) {
+        this.alarmActivated = alarmActivated;
+    }
+
     @Override
     public void execute(Action action) {
         action.execute(this);
@@ -34,10 +52,5 @@ public class SmartHome implements Actionable {
         for (Room room : rooms) {
             room.execute(action);
         }
-    }
-
-    @Override
-    public String toString() {
-        return activationCode;
     }
 }

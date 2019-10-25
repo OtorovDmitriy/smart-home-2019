@@ -8,6 +8,12 @@ import ru.sbt.mipt.oop.sensor_event.SensorEventType;
 public class DoorEventProcessor implements EventProcessor {
     @Override
     public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
+
+        if (smartHome.getAlarmActivated()) {
+            System.out.println("Sending sms...");
+            return;
+        }
+
         smartHome.execute(object -> {
             if (!(object instanceof Door)) return;
             Door door = (Door) object;
