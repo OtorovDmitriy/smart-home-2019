@@ -13,6 +13,6 @@ public class SensorEventLight extends SensorEvent {
         SensorEventType type = this.getType();
         String objectId = this.getObjectId();
 
-        new RoomLightState().changeLightState(smartHome, type, objectId);
+        new RoomLightState().changeStateOfRoomElement(smartHome, type, objectId);
     }
 }

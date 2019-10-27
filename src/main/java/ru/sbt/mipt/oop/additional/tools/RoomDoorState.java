@@ -5,9 +5,10 @@ import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.room.elements.Door;
 import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
-public class RoomDoorState {
+public class RoomDoorState implements RoomElementState {
 
-    public void changeDoorState(SmartHome smartHome, SensorEventType type, String objectId) {
+    @Override
+    public void changeStateOfRoomElement(SmartHome smartHome, SensorEventType type, String objectId) {
         for (Room room : smartHome.getRooms()) {
             for (Door door : room.getDoors()) {
                 if (door.getId().equals(objectId)) {

@@ -8,6 +8,12 @@ public class SensorEventLoop {
         SensorEvent currentEvent = event;
         SensorEventGenerator sensorEventGenerator = new SensorEventGenerator();
 
+        if (currentEvent.getType() == null) {
+            currentEvent = sensorEventGenerator.getNextSensorEvent();
+            createSensorEventLoop(currentEvent, smartHome);
+            // or print error message and return nothing
+        }
+
         while (currentEvent != null) {
             SensorEventType eventType = currentEvent.getType();
             String eventObjectId = currentEvent.getObjectId();

@@ -12,6 +12,6 @@ public class SensorEventDoor extends SensorEvent {
         SensorEventType type = this.getType();
         String objectId = this.getObjectId();
 
-        new RoomDoorState().changeDoorState(smartHome, type, objectId);
+        new RoomDoorState().changeStateOfRoomElement(smartHome, type, objectId);
     }
 }
