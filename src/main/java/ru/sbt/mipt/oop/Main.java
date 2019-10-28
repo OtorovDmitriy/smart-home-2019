@@ -18,6 +18,6 @@ public class Main {
         SmartHome smartHome = gson.fromJson(JSONResult, SmartHome.class);
 
         SensorEvent sensorEvent = new SensorEventGenerator().getNextSensorEvent();
-        new SensorEventLoop().createSensorEventLoop(sensorEvent, smartHome);
+        new SensorEventLoop(sensorEvent.getType(), sensorEvent.getObjectId()).createSensorEventLoop(sensorEvent, smartHome);
     }
 }

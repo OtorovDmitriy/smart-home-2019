@@ -3,13 +3,14 @@ package ru.sbt.mipt.oop.sensor.event;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.additional.tools.RoomLightState;
 
-public class SensorEventLight extends SensorEvent {
+public class SensorEventLight extends SensorEvent implements SensorEventElement {
 
-    public SensorEventLight(SensorEventType type, String ObjectId) {
+    SensorEventLight(SensorEventType type, String ObjectId) {
         super(type, ObjectId);
     }
 
-    public void switchLightState(SmartHome smartHome) {
+    @Override
+    public void switchElementState(SmartHome smartHome) {
         SensorEventType type = this.getType();
         String objectId = this.getObjectId();
 
