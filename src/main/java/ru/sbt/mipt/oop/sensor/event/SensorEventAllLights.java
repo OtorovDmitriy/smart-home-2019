@@ -7,9 +7,10 @@ import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.room.elements.Light;
 
-public class SensorEventAllLights {
+public class SensorEventAllLights implements SensorEventElement {
 
-    public void switchAllLights(SmartHome smartHome) {
+    @Override
+    public void switchElementState(SmartHome smartHome) {
         for (Room homeRoom : smartHome.getRooms()) {
             for (Light light : homeRoom.getLights()) {
                 light.setOn(false);

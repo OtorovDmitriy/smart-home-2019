@@ -7,7 +7,7 @@ public class RoomType {
 
     public void checkRoomType(String roomType, SmartHome smartHome) {
         if (roomType.equals("hall")) {
-            new SensorEventAllLights().switchAllLights(smartHome);
+            new SensorEventAllLights().switchElementState(smartHome);
         }
     }
 }

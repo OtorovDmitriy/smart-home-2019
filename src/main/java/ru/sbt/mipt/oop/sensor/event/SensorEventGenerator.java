@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop.sensor.event;
 
-public class SensorEventGenerator {
+public class SensorEventGenerator implements NextEvent {
 
     public SensorEvent getNextSensorEvent() {
         if (Math.random() < 0.05) return null;
