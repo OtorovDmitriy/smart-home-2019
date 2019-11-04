@@ -9,11 +9,6 @@ public class DoorEventProcessor implements EventProcessor {
     @Override
     public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
 
-        if (smartHome.getAlarm().getAlarmActivatedStatus()) {
-            System.out.println("Sending sms...");
-            return;
-        }
-
         smartHome.execute(object -> {
             if (!(object instanceof Door)) return;
             Door door = (Door) object;
@@ -26,7 +21,7 @@ public class DoorEventProcessor implements EventProcessor {
             if (sensorEvent.getType() == SensorEventType.DOOR_OPEN) {
                 door.setOpen(true);
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was opened.");
-            } else {
+            } else if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED) {
                 door.setOpen(false);
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was closed.");
             }

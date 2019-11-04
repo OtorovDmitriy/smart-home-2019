@@ -13,11 +13,6 @@ public class LightEventProcessor implements EventProcessor {
     @Override
     public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
 
-        if (smartHome.getAlarm().getAlarmActivatedStatus()) {
-            System.out.println("Sending sms...");
-            return;
-        }
-
         if (!(sensorEvent.getType() == LIGHT_ON || sensorEvent.getType() == LIGHT_OFF)) return;
 
         smartHome.execute(object -> {
@@ -45,7 +40,7 @@ public class LightEventProcessor implements EventProcessor {
             if (sensorEvent.getType() == LIGHT_ON) {
                 light.setOn(true);
                 System.out.println("Light: " + light.getId() + " was turned on");
-            } else {
+            } if (sensorEvent.getType() == LIGHT_OFF) {
                 light.setOn(false);
                 System.out.println("Light: " + light.getId() + " was turned off");
             }

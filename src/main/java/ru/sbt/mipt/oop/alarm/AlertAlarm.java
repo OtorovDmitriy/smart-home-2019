@@ -9,6 +9,6 @@ public class AlertAlarm extends Alarm {
 
     @Override
     public void activate() {
-        // System.out.println("Alarm!!!");;
+        System.out.println("Invalid password. Sending sms...");;
     }
 }

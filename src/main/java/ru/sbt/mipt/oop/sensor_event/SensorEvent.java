@@ -31,7 +31,6 @@ public class SensorEvent {
     @Override
     public String toString() {
         return "SensorEvent{" +
-                "deactivationCode=" + code +
                 " type=" + type +
                 ", objectId='" + objectId + '\'' +
                 '}';

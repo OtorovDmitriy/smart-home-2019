@@ -1,5 +1,9 @@
 package ru.sbt.mipt.oop.sensor_event;
+
 import java.util.UUID;
+
+import static ru.sbt.mipt.oop.sensor_event.SensorEventType.ALARM_ACTIVATE;
+import static ru.sbt.mipt.oop.sensor_event.SensorEventType.ALARM_DEACTIVATE;
 
 public class SensorEventGenerator {
 
@@ -7,7 +11,11 @@ public class SensorEventGenerator {
         if (Math.random() < 0.05) return null;
         SensorEventType sensorEventType = SensorEventType.values()[(int) (6 * Math.random())];
         String objectId = "" + ((int) (10 * Math.random()));
-        String code = UUID.randomUUID().toString().replace("-", "").toUpperCase();
-        return new SensorEvent(sensorEventType, objectId, code);
+        if (sensorEventType == ALARM_ACTIVATE || sensorEventType == ALARM_DEACTIVATE) {
+            String code = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+            return new SensorEvent(sensorEventType, objectId, code);
+        } else {
+            return new SensorEvent(sensorEventType, objectId);
+        }
     }
 }
