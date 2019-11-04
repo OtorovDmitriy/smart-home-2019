@@ -48,8 +48,14 @@ public class SensorEventsManagerAdapter extends SensorEventLoop {
                     break;
             }
 
-            SensorEvent sensorEvent = new SensorEvent(SensorEventType.valueOf(objectType), objectId);
-            sensorEventsArray.add(sensorEvent);
+            if (objectType.equals("ALARM_ACTIVATE") || objectType.equals("ALARM_DEACTIVATE")) {
+                String code = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+                SensorEvent sensorEvent = new SensorEvent(SensorEventType.valueOf(objectType), objectId, code);
+                sensorEventsArray.add(sensorEvent);
+            } else {
+                SensorEvent sensorEvent = new SensorEvent(SensorEventType.valueOf(objectType), objectId);
+                sensorEventsArray.add(sensorEvent);
+            }
         }
 
         return sensorEventsArray;

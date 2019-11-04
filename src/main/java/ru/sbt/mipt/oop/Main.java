@@ -6,6 +6,7 @@ import ru.sbt.mipt.oop.event_processor.*;
 import ru.sbt.mipt.oop.file_reader.FileReader;
 import ru.sbt.mipt.oop.file_reader.FileReaderJSONStrategy;
 import ru.sbt.mipt.oop.sensor_event.SensorEvent;
+import ru.sbt.mipt.oop.sensor_event.SensorEventChangeState;
 import ru.sbt.mipt.oop.sensor_event.SensorEventLoop;
 
 import java.io.IOException;
@@ -26,7 +27,6 @@ public class Main {
 
 
         SensorEventsManagerAdapter sensorEventsManagerAdapter = new SensorEventsManagerAdapter(new SensorEventsManager());
-        List<SensorEvent> sensorEventList = sensorEventsManagerAdapter.getSensorEventList();
-        new SensorEventLoop().changeStateOfRoomElement(sensorEventList, processors, smartHome);
+        new SensorEventChangeState().changeStateOfRoomElement(sensorEventsManagerAdapter, processors, smartHome);
     }
 }
