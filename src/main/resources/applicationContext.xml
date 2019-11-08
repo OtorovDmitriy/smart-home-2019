@@ -9,28 +9,28 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="fileReaderFromJSON"
-          class="ru.sbt.mipt.oop.file_reader.FileReaderJSONStrategy">
+          class="ru.sbt.mipt.oop.file.reader.FileReaderJSONStrategy">
     </bean>
 
     <bean id="fileReader"
-          class="ru.sbt.mipt.oop.file_reader.FileReader">
+          class="ru.sbt.mipt.oop.file.reader.FileReader">
         <constructor-arg ref="fileReaderFromJSON"/>
     </bean>
 
     <bean id="alarmEventProcessor"
-          class="ru.sbt.mipt.oop.event_processor.AlarmEventProcessor">
+          class="ru.sbt.mipt.oop.event.processor.AlarmEventProcessor">
     </bean>
 
     <bean id="lightEventProcessor"
-          class="ru.sbt.mipt.oop.event_processor.LightEventProcessor">
+          class="ru.sbt.mipt.oop.event.processor.LightEventProcessor">
     </bean>
 
     <bean id="doorEventProcessor"
-          class="ru.sbt.mipt.oop.event_processor.DoorEventProcessor">
+          class="ru.sbt.mipt.oop.event.processor.DoorEventProcessor">
     </bean>
 
     <bean id="eventProcessorComposite"
-          class="ru.sbt.mipt.oop.event_processor.EventProcessorComposite"
+          class="ru.sbt.mipt.oop.event.processor.EventProcessorComposite"
     >
     </bean>
 </beans>

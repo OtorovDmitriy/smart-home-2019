@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.file_reader;
+package ru.sbt.mipt.oop.file.reader;
 
 import ru.sbt.mipt.oop.SmartHome;
 

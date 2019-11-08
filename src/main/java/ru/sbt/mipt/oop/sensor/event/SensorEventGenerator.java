@@ -1,9 +1,9 @@
-package ru.sbt.mipt.oop.sensor_event;
+package ru.sbt.mipt.oop.sensor.event;
 
 import java.util.UUID;
 
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.ALARM_ACTIVATE;
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.ALARM_DEACTIVATE;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.ALARM_ACTIVATE;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.ALARM_DEACTIVATE;
 
 public class SensorEventGenerator {
 

@@ -4,19 +4,19 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.event_processor.EventProcessor;
-import ru.sbt.mipt.oop.event_processor.EventProcessorComposite;
-import ru.sbt.mipt.oop.event_processor.LightEventProcessor;
-import ru.sbt.mipt.oop.file_reader.FileReader;
-import ru.sbt.mipt.oop.file_reader.FileReaderJSONStrategy;
-import ru.sbt.mipt.oop.room_elements.Light;
-import ru.sbt.mipt.oop.sensor_event.SensorEvent;
+import ru.sbt.mipt.oop.event.processor.EventProcessor;
+import ru.sbt.mipt.oop.event.processor.EventProcessorComposite;
+import ru.sbt.mipt.oop.event.processor.LightEventProcessor;
+import ru.sbt.mipt.oop.file.reader.FileReader;
+import ru.sbt.mipt.oop.file.reader.FileReaderJSONStrategy;
+import ru.sbt.mipt.oop.room.elements.Light;
+import ru.sbt.mipt.oop.sensor.event.SensorEvent;
 
 import java.io.IOException;
 import java.util.List;
 
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.LIGHT_ON;
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.LIGHT_OFF;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.LIGHT_ON;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.LIGHT_OFF;
 
 public class LightEventProcessorTest {
 

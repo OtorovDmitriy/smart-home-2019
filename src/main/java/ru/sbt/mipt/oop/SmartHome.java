@@ -1,8 +1,8 @@
 package ru.sbt.mipt.oop;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.event_processor.Action;
-import ru.sbt.mipt.oop.event_processor.Actionable;
+import ru.sbt.mipt.oop.event.processor.Action;
+import ru.sbt.mipt.oop.event.processor.Actionable;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,9 +1,9 @@
 package ru.sbt.mipt.oop.api;
 
 import com.coolcompany.smarthome.events.SensorEventsManager;
-import ru.sbt.mipt.oop.sensor_event.SensorEvent;
-import ru.sbt.mipt.oop.sensor_event.SensorEventLoop;
-import ru.sbt.mipt.oop.sensor_event.SensorEventType;
+import ru.sbt.mipt.oop.sensor.event.SensorEvent;
+import ru.sbt.mipt.oop.sensor.event.SensorEventLoop;
+import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
 import java.util.*;
 

@@ -1,8 +1,8 @@
 package ru.sbt.mipt.oop.alarm;
 
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.event_processor.Action;
-import ru.sbt.mipt.oop.event_processor.Actionable;
+import ru.sbt.mipt.oop.event.processor.Action;
+import ru.sbt.mipt.oop.event.processor.Actionable;
 
 public abstract class AlarmAbstract implements Actionable {
     public SmartHome smartHome;

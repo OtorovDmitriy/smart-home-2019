@@ -3,9 +3,10 @@ package ru.sbt.mipt.oop;
 import com.coolcompany.smarthome.events.SensorEventsManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sbt.mipt.oop.api.SensorEventsManagerAdapter;
+import ru.sbt.mipt.oop.event.processor.*;
 import ru.sbt.mipt.oop.event_processor.*;
-import ru.sbt.mipt.oop.file_reader.FileReader;
-import ru.sbt.mipt.oop.sensor_event.SensorEventChangeState;
+import ru.sbt.mipt.oop.file.reader.FileReader;
+import ru.sbt.mipt.oop.sensor.event.SensorEventChangeState;
 
 import java.io.IOException;
 import java.util.List;

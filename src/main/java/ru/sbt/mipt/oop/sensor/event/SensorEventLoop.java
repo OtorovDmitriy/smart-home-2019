@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.sensor_event;
+package ru.sbt.mipt.oop.sensor.event;
 
 import java.util.ArrayList;
 import java.util.List;

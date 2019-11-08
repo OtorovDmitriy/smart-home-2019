@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.event_processor;
+package ru.sbt.mipt.oop.event.processor;
 
 import java.util.ArrayList;
 import java.util.List;

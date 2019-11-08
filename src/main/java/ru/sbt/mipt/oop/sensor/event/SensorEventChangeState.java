@@ -1,11 +1,11 @@
-package ru.sbt.mipt.oop.sensor_event;
+package ru.sbt.mipt.oop.sensor.event;
 
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.event_processor.EventProcessor;
+import ru.sbt.mipt.oop.event.processor.EventProcessor;
 
 import java.util.List;
 
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.ALARM_DEACTIVATE;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.ALARM_DEACTIVATE;
 
 public class SensorEventChangeState {
 

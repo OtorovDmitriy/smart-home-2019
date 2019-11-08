@@ -1,12 +1,12 @@
-package ru.sbt.mipt.oop.event_processor;
+package ru.sbt.mipt.oop.event.processor;
 
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.alarm.ActivateAlarm;
 import ru.sbt.mipt.oop.alarm.DeactivateAlarm;
-import ru.sbt.mipt.oop.sensor_event.SensorEvent;
+import ru.sbt.mipt.oop.sensor.event.SensorEvent;
 
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.ALARM_ACTIVATE;
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.ALARM_DEACTIVATE;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.ALARM_ACTIVATE;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.ALARM_DEACTIVATE;
 
 public class AlarmEventProcessor implements EventProcessor {
     @Override

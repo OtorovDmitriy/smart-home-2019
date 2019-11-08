@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop.alarm;
 
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.event_processor.Action;
+import ru.sbt.mipt.oop.event.processor.Action;
 
 public class Alarm extends AlarmAbstract {
 
