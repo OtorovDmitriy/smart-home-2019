@@ -4,11 +4,9 @@ import ru.sbt.mipt.oop.additional.tools.GsonObject;
 import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
 import ru.sbt.mipt.oop.sensor.event.*;
 
-import java.io.IOException;
-
 public class Main {
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) {
         ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
         String JSONResult = readFromJSON.readInputData();
 
