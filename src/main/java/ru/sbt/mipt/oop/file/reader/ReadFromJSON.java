@@ -12,9 +12,16 @@ public class ReadFromJSON extends FileReader implements FileReaderInterface {
     }
 
     @Override
-    public String readInputData() throws IOException {
+    public String readInputData() {
         Path path = Paths.get(this.getFileName());
-        byte[] allBytes = Files.readAllBytes(path);
+        byte[] allBytes = new byte[0];
+
+        try {
+            allBytes = Files.readAllBytes(path);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
         return new String(allBytes);
     }
 }

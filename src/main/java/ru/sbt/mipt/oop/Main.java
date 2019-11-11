@@ -1,10 +1,8 @@
 package ru.sbt.mipt.oop;
 
-import com.google.gson.Gson;
+import ru.sbt.mipt.oop.additional.tools.GsonObject;
 import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
-import ru.sbt.mipt.oop.sensor.event.SensorEvent;
-import ru.sbt.mipt.oop.sensor.event.SensorEventGenerator;
-import ru.sbt.mipt.oop.sensor.event.SensorEventLoop;
+import ru.sbt.mipt.oop.sensor.event.*;
 
 import java.io.IOException;
 
@@ -14,10 +12,19 @@ public class Main {
         ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
         String JSONResult = readFromJSON.readInputData();
 
-        Gson gson = new Gson();
-        SmartHome smartHome = gson.fromJson(JSONResult, SmartHome.class);
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
 
-        SensorEvent sensorEvent = new SensorEventGenerator().getNextSensorEvent();
-        new SensorEventLoop(sensorEvent.getType(), sensorEvent.getObjectId()).createSensorEventLoop(sensorEvent, smartHome);
+        SensorEventGenerator sensorEventGenerator = new SensorEventGenerator();
+        SensorEvent sensorEvent = sensorEventGenerator.getNextSensorEvent();
+        SensorEventLoop sensorEventLoop = new SensorEventLoop();
+
+        while (sensorEvent != null) {
+            System.out.println("Got event: " + sensorEvent);
+            sensorEventLoop.cleanList();
+            sensorEventLoop.addItem(new SensorEventDoor(sensorEvent.getType(), sensorEvent.getObjectId()));
+            sensorEventLoop.addItem(new SensorEventLight(sensorEvent.getType(), sensorEvent.getObjectId()));
+            sensorEventLoop.handleEvents(smartHome);
+            sensorEvent = sensorEventGenerator.getNextSensorEvent();
+        }
     }
 }

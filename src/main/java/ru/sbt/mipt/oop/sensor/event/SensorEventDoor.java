@@ -4,7 +4,7 @@ import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.additional.tools.RoomDoorState;
 
 public class SensorEventDoor extends SensorEvent implements SensorEventElement {
-    SensorEventDoor(SensorEventType type, String objectId) {
+    public SensorEventDoor(SensorEventType type, String objectId) {
         super(type, objectId);
     }
 

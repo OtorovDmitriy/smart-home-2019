@@ -5,7 +5,7 @@ import ru.sbt.mipt.oop.additional.tools.RoomLightState;
 
 public class SensorEventLight extends SensorEvent implements SensorEventElement {
 
-    SensorEventLight(SensorEventType type, String ObjectId) {
+    public SensorEventLight(SensorEventType type, String ObjectId) {
         super(type, ObjectId);
     }
 
