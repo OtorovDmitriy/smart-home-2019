@@ -1,7 +1,7 @@
-package ru.sbt.mipt.oop.room_elements;
+package ru.sbt.mipt.oop.room.elements;
 
-import ru.sbt.mipt.oop.event_processor.Action;
-import ru.sbt.mipt.oop.event_processor.Actionable;
+import ru.sbt.mipt.oop.event.processor.Action;
+import ru.sbt.mipt.oop.event.processor.Actionable;
 
 public class Light implements Actionable {
     private boolean isOn;

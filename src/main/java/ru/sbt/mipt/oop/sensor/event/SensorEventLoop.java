@@ -1,6 +1,6 @@
-package ru.sbt.mipt.oop.sensor_event;
+package ru.sbt.mipt.oop.sensor.event;
 
-import ru.sbt.mipt.oop.event_processor.EventProcessor;
+import ru.sbt.mipt.oop.event.processor.EventProcessor;
 import ru.sbt.mipt.oop.SmartHome;
 
 import java.util.List;

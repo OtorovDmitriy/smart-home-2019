@@ -1,12 +1,12 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.event_processor.DoorEventProcessor;
-import ru.sbt.mipt.oop.event_processor.EventProcessor;
-import ru.sbt.mipt.oop.event_processor.LightEventProcessor;
-import ru.sbt.mipt.oop.event_processor.EventProcessorComposite;
-import ru.sbt.mipt.oop.file_reader.FileReader;
-import ru.sbt.mipt.oop.file_reader.FileReaderJSONStrategy;
-import ru.sbt.mipt.oop.sensor_event.SensorEventLoop;
+import ru.sbt.mipt.oop.event.processor.DoorEventProcessor;
+import ru.sbt.mipt.oop.event.processor.EventProcessor;
+import ru.sbt.mipt.oop.event.processor.LightEventProcessor;
+import ru.sbt.mipt.oop.event.processor.EventProcessorComposite;
+import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
+import ru.sbt.mipt.oop.sensor.event.SensorEventLoop;
+import ru.sbt.mipt.oop.additional.tools.GsonObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,9 +14,10 @@ import java.util.List;
 public class Main {
 
     public static void main(String... args) throws IOException {
-        FileReaderJSONStrategy strategyJSON = new FileReaderJSONStrategy();
-        FileReader fileReader = new FileReader(strategyJSON);
-        SmartHome smartHome = fileReader.executeStrategy("smart-home-1.js", SmartHome.class);
+        ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
+        String JSONResult = readFromJSON.readInputData();
+
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
 
         EventProcessorComposite eventProcessorComposite = new EventProcessorComposite();
         eventProcessorComposite.addProcessor(new LightEventProcessor());
