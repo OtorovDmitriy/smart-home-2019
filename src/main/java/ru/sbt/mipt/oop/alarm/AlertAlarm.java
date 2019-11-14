@@ -1,14 +1,8 @@
 package ru.sbt.mipt.oop.alarm;
 
-import ru.sbt.mipt.oop.SmartHome;
-
-public class AlertAlarm extends Alarm {
-    AlertAlarm(SmartHome smartHome) {
-        super(smartHome);
-    }
-
+public class AlertAlarm implements AlarmInterface {
     @Override
-    public void activate() {
-        System.out.println("Invalid password. Sending sms...");;
+    public void activate(Alarm alarm) {
+        System.out.println("Alert...Alert...Alert...");
     }
 }

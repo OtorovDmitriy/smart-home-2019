@@ -1,9 +1,9 @@
-package ru.sbt.mipt.oop.event_processor;
+package ru.sbt.mipt.oop.event.processor;
 
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.room_elements.Door;
-import ru.sbt.mipt.oop.sensor_event.SensorEvent;
-import ru.sbt.mipt.oop.sensor_event.SensorEventType;
+import ru.sbt.mipt.oop.room.elements.Door;
+import ru.sbt.mipt.oop.sensor.event.SensorEvent;
+import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
 public class DoorEventProcessor implements EventProcessor {
     @Override
@@ -18,11 +18,11 @@ public class DoorEventProcessor implements EventProcessor {
 
     private void changeDoorState(Door door, SensorEvent sensorEvent) {
         if (door.getId().equals(sensorEvent.getObjectId())) {
-            if (sensorEvent.getType() == SensorEventType.DOOR_OPEN) {
-                door.setOpen(true);
+            if (sensorEvent.getType() == SensorEventType.DOOR_OPEN && !door.getState()) {
+                door.changeState();
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was opened.");
-            } else if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED) {
-                door.setOpen(false);
+            } else if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED && door.getState()) {
+                door.changeState();
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was closed.");
             }
         }

@@ -1,27 +1,26 @@
-package ru.sbt.mipt.oop.room_elements;
+package ru.sbt.mipt.oop.room.elements;
 
-import ru.sbt.mipt.oop.event_processor.Action;
-import ru.sbt.mipt.oop.event_processor.Actionable;
+import ru.sbt.mipt.oop.event.processor.Action;
+import ru.sbt.mipt.oop.event.processor.Actionable;
 
 public class Door implements Actionable {
     private final String id;
-
     private boolean isOpen;
 
     public Door(boolean isOpen, String id) {
-        this.isOpen = isOpen;
         this.id = id;
+        this.isOpen = isOpen;
+    }
+
+    public void changeState() {
+        isOpen = !isOpen;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setOpen(boolean open) {
-        isOpen = open;
-    }
-
-    public boolean isOpen() {
+    public boolean getState() {
         return isOpen;
     }
 

@@ -1,26 +1,31 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.event_processor.*;
-import ru.sbt.mipt.oop.file_reader.FileReader;
-import ru.sbt.mipt.oop.file_reader.FileReaderJSONStrategy;
-import ru.sbt.mipt.oop.sensor_event.SensorEventLoop;
+import ru.sbt.mipt.oop.event.processor.*;
+import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
+import ru.sbt.mipt.oop.sensor.event.SensorEventGenerator;
+import ru.sbt.mipt.oop.sensor.event.SensorEventLoop;
+import ru.sbt.mipt.oop.additional.tools.GsonObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
     public static void main(String... args) throws IOException {
-        FileReaderJSONStrategy strategyJSON = new FileReaderJSONStrategy();
-        FileReader fileReader = new FileReader(strategyJSON);
-        SmartHome smartHome = fileReader.executeStrategy("smart-home-1.js", SmartHome.class);
+        ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
+        String JSONResult = readFromJSON.readInputData();
 
-        EventProcessorComposite eventProcessorComposite = new EventProcessorComposite();
-        eventProcessorComposite.addProcessor(new AlarmEventProcessor());
-        eventProcessorComposite.addProcessor(new LightEventProcessor());
-        eventProcessorComposite.addProcessor(new DoorEventProcessor());
-        List<EventProcessor> processors = eventProcessorComposite.getProcessors();
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
 
-        new SensorEventLoop().changeStateOfRoomElement(processors, smartHome);
+        List<EventProcessor> processors = new ArrayList<>();
+        processors.add(new AlarmEventProcessor());
+        processors.add(new HallDoorEventProcessor());
+        processors.add(new DoorEventProcessor());
+        processors.add(new LightEventProcessor());
+
+        SensorEventGenerator sensorEventGenerator = new SensorEventGenerator();
+        SensorEventLoop sensorEventLoop = new SensorEventLoop();
+        sensorEventLoop.changeStateOfRoomElement(sensorEventGenerator, processors, smartHome);
     }
 }

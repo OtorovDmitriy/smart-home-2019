@@ -4,75 +4,73 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.event_processor.EventProcessor;
-import ru.sbt.mipt.oop.event_processor.EventProcessorComposite;
-import ru.sbt.mipt.oop.event_processor.LightEventProcessor;
-import ru.sbt.mipt.oop.file_reader.FileReader;
-import ru.sbt.mipt.oop.file_reader.FileReaderJSONStrategy;
-import ru.sbt.mipt.oop.room_elements.Light;
-import ru.sbt.mipt.oop.sensor_event.SensorEvent;
+import ru.sbt.mipt.oop.additional.tools.GsonObject;
+import ru.sbt.mipt.oop.event.processor.EventProcessor;
+import ru.sbt.mipt.oop.event.processor.LightEventProcessor;
+import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
+import ru.sbt.mipt.oop.room.elements.Light;
+import ru.sbt.mipt.oop.sensor.event.SensorEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.LIGHT_ON;
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.LIGHT_OFF;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.LIGHT_ON;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.LIGHT_OFF;
 
 public class LightEventProcessorTest {
 
     @Test
     public void TestLightEventProcessorSetOn() throws IOException {
-        FileReaderJSONStrategy strategyJSON = new FileReaderJSONStrategy();
-        FileReader fileReader = new FileReader(strategyJSON);
-        SmartHome smartHome = fileReader.executeStrategy("smart-home-1.js", SmartHome.class);
+        ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
+        String JSONResult = readFromJSON.readInputData();
 
-        EventProcessorComposite eventProcessorComposite = new EventProcessorComposite();
-        eventProcessorComposite.addProcessor(new LightEventProcessor());
-        List<EventProcessor> processors = eventProcessorComposite.getProcessors();
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
+
+        List<EventProcessor> processors = new ArrayList<>();
+        processors.add(new LightEventProcessor());
 
         SensorEvent currentEvent = new SensorEvent(LIGHT_ON, "1");
         processors.get(0).Process(smartHome, currentEvent);
 
-        boolean isOn = false;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Light light : room.getLights()) {
+            room.execute(lightObject -> {
+                if (!(lightObject instanceof Light)) return;
+                Light light = (Light) lightObject;
                 if (light.getId().equals("1")) {
-                    isOn = light.isOn();
+                    Assert.assertTrue(light.getState());
                 }
-            }
-        }
-
-        isOn = true;
-
-        Assert.assertTrue(isOn);
+            });
+        });
     }
 
     @Test
     public void TestLightEventProcessorSetOff() throws IOException {
-        FileReaderJSONStrategy strategyJSON = new FileReaderJSONStrategy();
-        FileReader fileReader = new FileReader(strategyJSON);
-        SmartHome smartHome = fileReader.executeStrategy("smart-home-1.js", SmartHome.class);
+        ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
+        String JSONResult = readFromJSON.readInputData();
 
-        EventProcessorComposite eventProcessorComposite = new EventProcessorComposite();
-        eventProcessorComposite.addProcessor(new LightEventProcessor());
-        List<EventProcessor> processors = eventProcessorComposite.getProcessors();
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
+
+        List<EventProcessor> processors = new ArrayList<>();
+        processors.add(new LightEventProcessor());
 
         SensorEvent currentEvent = new SensorEvent(LIGHT_OFF, "1");
         processors.get(0).Process(smartHome, currentEvent);
 
-        boolean isOn = true;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Light light : room.getLights()) {
+            room.execute(lightObject -> {
+                if (!(lightObject instanceof Light)) return;
+                Light light = (Light) lightObject;
                 if (light.getId().equals("1")) {
-                    isOn = light.isOn();
+                    Assert.assertFalse(light.getState());
                 }
-            }
-        }
-
-        isOn = false;
-
-        Assert.assertFalse(isOn);
+            });
+        });
     }
 }

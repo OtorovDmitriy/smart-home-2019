@@ -1,33 +1,32 @@
 package ru.sbt.mipt.oop.alarm;
 
-import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.event_processor.Action;
+import ru.sbt.mipt.oop.event.processor.Action;
+import ru.sbt.mipt.oop.event.processor.Actionable;
 
-public class Alarm extends AlarmAbstract {
+public class Alarm implements Actionable {
+    private AlarmInterface state;
+    private Boolean alarmState = false;
+    private String code = "";
 
-    private String activationCode = "";
-    private Boolean alarmActivated = false;
-
-    public Alarm(SmartHome smartHome) {
-        super(smartHome);
+    public void setState(AlarmInterface state) {
+        this.state = state;
     }
 
-    @Override
+    public void setCode(String code) {
+        this.alarmState = !this.alarmState;
+        this.code = code;
+    }
+
+    public boolean checkCode(String code) {
+        return this.code.equals(code);
+    }
+
+    public boolean getAlarmState() {
+        return alarmState;
+    }
+
     public void activate() {
-
-    }
-
-    void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
-        this.alarmActivated = !this.alarmActivated;
-    }
-
-    boolean checkDeactivationCode(String deactivationCode) {
-        return activationCode.equals(deactivationCode);
-    }
-
-    public boolean getAlarmActivatedStatus() {
-        return alarmActivated;
+        state.activate(this);
     }
 
     @Override
