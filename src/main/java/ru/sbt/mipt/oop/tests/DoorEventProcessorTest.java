@@ -33,17 +33,18 @@ public class DoorEventProcessorTest {
         SensorEvent currentEvent = new SensorEvent(DOOR_OPEN, "1");
         processors.get(0).Process(smartHome, currentEvent);
 
-        boolean isOpen = false;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Door door : room.getDoors()) {
+            room.execute(doorObject -> {
+                if (!(doorObject instanceof Door)) return;
+                Door door = (Door) doorObject;
                 if (door.getId().equals("1")) {
-                    isOpen = door.getState();
+                    Assert.assertTrue(door.getState());
                 }
-            }
-        }
-
-        Assert.assertTrue(isOpen);
+            });
+        });
     }
 
     @Test
@@ -59,16 +60,17 @@ public class DoorEventProcessorTest {
         SensorEvent currentEvent = new SensorEvent(DOOR_CLOSED, "1");
         processors.get(0).Process(smartHome, currentEvent);
 
-        boolean isOpen = true;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Door door : room.getDoors()) {
+            room.execute(doorObject -> {
+                if (!(doorObject instanceof Door)) return;
+                Door door = (Door) doorObject;
                 if (door.getId().equals("1")) {
-                    isOpen = door.getState();
+                    Assert.assertFalse(door.getState());
                 }
-            }
-        }
-
-        Assert.assertFalse(isOpen);
+            });
+        });
     }
 }

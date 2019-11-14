@@ -17,10 +17,10 @@ public class DoorEventProcessor implements EventProcessor {
 
     private void changeDoorState(Door door, SensorEvent sensorEvent) {
         if (door.getId().equals(sensorEvent.getObjectId())) {
-            if (sensorEvent.getType() == SensorEventType.DOOR_OPEN) {
+            if (sensorEvent.getType() == SensorEventType.DOOR_OPEN && !door.getState()) {
                 door.changeState();
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was opened.");
-            } else if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED) {
+            } else if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED && door.getState()) {
                 door.changeState();
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was closed.");
             }

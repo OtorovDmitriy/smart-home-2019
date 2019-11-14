@@ -2,8 +2,10 @@ package ru.sbt.mipt.oop;
 
 import ru.sbt.mipt.oop.event.processor.DoorEventProcessor;
 import ru.sbt.mipt.oop.event.processor.EventProcessor;
+import ru.sbt.mipt.oop.event.processor.HallDoorEventProcessor;
 import ru.sbt.mipt.oop.event.processor.LightEventProcessor;
 import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
+import ru.sbt.mipt.oop.sensor.event.SensorEventGenerator;
 import ru.sbt.mipt.oop.sensor.event.SensorEventLoop;
 import ru.sbt.mipt.oop.additional.tools.GsonObject;
 
@@ -20,10 +22,12 @@ public class Main {
         SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
 
         List<EventProcessor> processors = new ArrayList<>();
-        processors.add(new LightEventProcessor());
+        processors.add(new HallDoorEventProcessor());
         processors.add(new DoorEventProcessor());
+        processors.add(new LightEventProcessor());
 
+        SensorEventGenerator sensorEventGenerator = new SensorEventGenerator();
         SensorEventLoop sensorEventLoop = new SensorEventLoop();
-        sensorEventLoop.changeStateOfRoomElement(processors, smartHome);
+        sensorEventLoop.changeStateOfRoomElement(sensorEventGenerator, processors, smartHome);
     }
 }

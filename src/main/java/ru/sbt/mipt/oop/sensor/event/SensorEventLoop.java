@@ -7,8 +7,7 @@ import java.util.List;
 
 public class SensorEventLoop {
 
-    public void changeStateOfRoomElement(List<EventProcessor> processors, SmartHome smartHome) {
-        SensorEventGenerator sensorEventGenerator = new SensorEventGenerator();
+    public void changeStateOfRoomElement(SensorEventGenerator sensorEventGenerator, List<EventProcessor> processors, SmartHome smartHome) {
         SensorEvent currentEvent = sensorEventGenerator.getNextSensorEvent();
 
         while (currentEvent != null) {

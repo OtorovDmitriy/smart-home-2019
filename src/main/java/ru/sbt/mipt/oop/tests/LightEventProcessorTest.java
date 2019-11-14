@@ -33,17 +33,18 @@ public class LightEventProcessorTest {
         SensorEvent currentEvent = new SensorEvent(LIGHT_ON, "1");
         processors.get(0).Process(smartHome, currentEvent);
 
-        boolean isOn = false;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Light light : room.getLights()) {
+            room.execute(lightObject -> {
+                if (!(lightObject instanceof Light)) return;
+                Light light = (Light) lightObject;
                 if (light.getId().equals("1")) {
-                    isOn = light.getState();
+                    Assert.assertTrue(light.getState());
                 }
-            }
-        }
-
-        Assert.assertTrue(isOn);
+            });
+        });
     }
 
     @Test
@@ -59,16 +60,17 @@ public class LightEventProcessorTest {
         SensorEvent currentEvent = new SensorEvent(LIGHT_OFF, "1");
         processors.get(0).Process(smartHome, currentEvent);
 
-        boolean isOn = true;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Light light : room.getLights()) {
+            room.execute(lightObject -> {
+                if (!(lightObject instanceof Light)) return;
+                Light light = (Light) lightObject;
                 if (light.getId().equals("1")) {
-                    isOn = light.getState();
+                    Assert.assertFalse(light.getState());
                 }
-            }
-        }
-
-        Assert.assertFalse(isOn);
+            });
+        });
     }
 }
