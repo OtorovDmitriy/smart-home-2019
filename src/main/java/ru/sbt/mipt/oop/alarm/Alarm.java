@@ -4,29 +4,43 @@ import ru.sbt.mipt.oop.event.processor.Action;
 import ru.sbt.mipt.oop.event.processor.Actionable;
 
 public class Alarm implements Actionable {
-    private AlarmInterface state;
+    private State state;
     private Boolean alarmState = false;
     private String code = "";
 
-    public void setState(AlarmInterface state) {
-        this.state = state;
+    public Alarm() {
+        this.state = new Deactivated();
+        state.setAlarm(this);
     }
 
-    public void setCode(String code) {
+    void setState(State state) {
+        this.state = state;
+        state.setAlarm(this);
+    }
+
+    void setCode(String code) {
         this.alarmState = !this.alarmState;
         this.code = code;
     }
 
-    public boolean checkCode(String code) {
+    boolean checkCode(String code) {
         return this.code.equals(code);
     }
 
-    public boolean getAlarmState() {
+    boolean getAlarmState() {
         return alarmState;
     }
 
     public void activate() {
-        state.activate(this);
+        state.activate();
+    }
+
+    public void deactivate() {
+        state.deactivate();
+    }
+
+    public void enableAlert() {
+        state.enableAlert();
     }
 
     @Override

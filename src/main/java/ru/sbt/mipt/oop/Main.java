@@ -6,13 +6,12 @@ import ru.sbt.mipt.oop.sensor.event.SensorEventGenerator;
 import ru.sbt.mipt.oop.sensor.event.SensorEventLoop;
 import ru.sbt.mipt.oop.additional.tools.GsonObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) {
         ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
         String JSONResult = readFromJSON.readInputData();
 

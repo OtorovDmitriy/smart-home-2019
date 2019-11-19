@@ -12,8 +12,8 @@ public class Light implements Actionable {
         this.isOn = isOn;
     }
 
-    public void changeState() {
-        isOn = !isOn;
+    public void changeState(boolean isOn) {
+        this.isOn = isOn;
     }
 
     public String getId() {

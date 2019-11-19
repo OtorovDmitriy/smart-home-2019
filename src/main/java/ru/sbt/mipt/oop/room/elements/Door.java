@@ -12,8 +12,8 @@ public class Door implements Actionable {
         this.isOpen = isOpen;
     }
 
-    public void changeState() {
-        isOpen = !isOpen;
+    public void changeState(boolean isOpen) {
+        this.isOpen = isOpen;
     }
 
     public String getId() {

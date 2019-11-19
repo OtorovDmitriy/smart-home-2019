@@ -33,7 +33,7 @@ public class HallDoorEventProcessor implements EventProcessor {
             if (!(object instanceof Light)) return;
             Light light = (Light) object;
             if (light.getState()) {
-                light.changeState();
+                light.changeState(false);
                 System.out.println("- Light: " + light.getId() + " was turned off");
             }
         });
