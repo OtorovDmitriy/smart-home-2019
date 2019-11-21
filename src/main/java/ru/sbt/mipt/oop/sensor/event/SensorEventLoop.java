@@ -15,7 +15,6 @@ public class SensorEventLoop {
             System.out.println("Got event: " + currentEvent);
 
             for (EventProcessor processor : processors) {
-//                processor.Process(smartHome, currentEvent);
                 new EventProcessorDecorator(processor).Process(smartHome, currentEvent);
             }
 
