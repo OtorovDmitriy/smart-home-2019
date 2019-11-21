@@ -2,6 +2,7 @@ package ru.sbt.mipt.oop.sensor.event;
 
 import ru.sbt.mipt.oop.event.processor.EventProcessor;
 import ru.sbt.mipt.oop.SmartHome;
+import ru.sbt.mipt.oop.event.processor.EventProcessorDecorator;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ public class SensorEventLoop {
             System.out.println("Got event: " + currentEvent);
 
             for (EventProcessor processor : processors) {
-                processor.Process(smartHome, currentEvent);
+//                processor.Process(smartHome, currentEvent);
+                new EventProcessorDecorator(processor).Process(smartHome, currentEvent);
             }
 
             currentEvent = sensorEventGenerator.getNextSensorEvent();

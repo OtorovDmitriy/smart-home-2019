@@ -27,7 +27,7 @@ public class Alarm implements Actionable {
         return this.code.equals(code);
     }
 
-    boolean getAlarmState() {
+    public boolean getAlarmState() {
         return alarmState;
     }
 

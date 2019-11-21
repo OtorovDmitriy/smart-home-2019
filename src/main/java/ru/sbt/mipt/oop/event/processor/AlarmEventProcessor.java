@@ -21,13 +21,6 @@ public class AlarmEventProcessor implements EventProcessor {
             alarm.activate();
         } else if (sensorEvent.getType() == SensorEventType.ALARM_DEACTIVATE) {
             alarm.deactivate();
-
-//            String tempCode = SensorEventType.ALARM_DEACTIVATE.getCode();
-//            if (alarm.checkCode(tempCode)) {
-//                alarm.deactivate();
-//            } else {
-//                setOnAlertAlert(alarm);
-//            }
         }
     }
 }
