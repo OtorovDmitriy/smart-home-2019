@@ -1,10 +1,9 @@
 package ru.sbt.mipt.oop.alarm;
 
-public class Alert implements State {
+public class Alert implements AlarmState {
     private Alarm alarm;
 
-    @Override
-    public void setAlarm(Alarm alarm) {
+    public Alert(Alarm alarm) {
         this.alarm = alarm;
     }
 
@@ -20,11 +19,10 @@ public class Alert implements State {
 
     @Override
     public void enableAlert() {
-        System.out.println("Sending SMS...");
-        if (alarm.getAlarmState()) {
-            alarm.setState(new Activated());
+        if (!alarm.checkCode("")) {
+            alarm.setAlarmState(new Activated(alarm));
         } else {
-            alarm.setState(new Deactivated());
+            alarm.setAlarmState(new Deactivated(alarm));
         }
     }
 }

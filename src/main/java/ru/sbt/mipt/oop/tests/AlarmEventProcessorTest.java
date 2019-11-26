@@ -5,6 +5,7 @@ import org.junit.Test;
 import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.additional.tools.GsonObject;
+import ru.sbt.mipt.oop.alarm.Activated;
 import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.event.processor.AlarmEventProcessor;
 import ru.sbt.mipt.oop.event.processor.DoorEventProcessor;
@@ -40,7 +41,7 @@ public class AlarmEventProcessorTest {
         EventProcessor eventProcessor = processors.get(0);
         new EventProcessorDecorator(eventProcessor).process(smartHome, sensorEvent);
         Alarm alarm = smartHome.getAlarm();
-        Assert.assertTrue(alarm.getAlarmState());
+        Assert.assertTrue(alarm.getAlarmState() instanceof Activated);
     }
 
     @Test
@@ -65,7 +66,7 @@ public class AlarmEventProcessorTest {
         }
 
         Alarm alarm = smartHome.getAlarm();
-        Assert.assertFalse(alarm.getAlarmState());
+        Assert.assertFalse(alarm.getAlarmState() instanceof Activated);
     }
 
     @Test

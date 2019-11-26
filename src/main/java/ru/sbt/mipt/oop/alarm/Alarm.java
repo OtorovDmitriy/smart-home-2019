@@ -4,22 +4,22 @@ import ru.sbt.mipt.oop.event.processor.Action;
 import ru.sbt.mipt.oop.event.processor.Actionable;
 
 public class Alarm implements Actionable {
-    private State state;
-    private Boolean alarmState = false;
+    private AlarmState alarmState;
     private String code = "";
 
     public Alarm() {
-        this.state = new Deactivated();
-        state.setAlarm(this);
+        this.alarmState = new Deactivated(this);
     }
 
-    void setState(State state) {
-        this.state = state;
-        state.setAlarm(this);
+    void setAlarmState(AlarmState alarmState) {
+        this.alarmState = alarmState;
+    }
+
+    public AlarmState getAlarmState() {
+        return alarmState;
     }
 
     void setCode(String code) {
-        this.alarmState = !this.alarmState;
         this.code = code;
     }
 
@@ -27,20 +27,16 @@ public class Alarm implements Actionable {
         return this.code.equals(code);
     }
 
-    public boolean getAlarmState() {
-        return alarmState;
-    }
-
     public void activate() {
-        state.activate();
+        alarmState.activate();
     }
 
     public void deactivate() {
-        state.deactivate();
+        alarmState.deactivate();
     }
 
     public void enableAlert() {
-        state.enableAlert();
+        alarmState.enableAlert();
     }
 
     @Override
