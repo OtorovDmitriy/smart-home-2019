@@ -31,7 +31,7 @@ public class DoorEventProcessorTest {
         processors.add(new DoorEventProcessor());
 
         SensorEvent currentEvent = new SensorEvent(DOOR_OPEN, "1");
-        processors.get(0).Process(smartHome, currentEvent);
+        processors.get(0).process(smartHome, currentEvent);
 
         smartHome.execute(object -> {
             if (!(object instanceof Room)) return;
@@ -58,7 +58,7 @@ public class DoorEventProcessorTest {
         processors.add(new DoorEventProcessor());
 
         SensorEvent currentEvent = new SensorEvent(DOOR_CLOSED, "1");
-        processors.get(0).Process(smartHome, currentEvent);
+        processors.get(0).process(smartHome, currentEvent);
 
         smartHome.execute(object -> {
             if (!(object instanceof Room)) return;

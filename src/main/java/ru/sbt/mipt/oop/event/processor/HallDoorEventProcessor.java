@@ -9,7 +9,7 @@ import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
 public class HallDoorEventProcessor implements EventProcessor {
     @Override
-    public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
+    public void process(SmartHome smartHome, SensorEvent sensorEvent) {
         smartHome.execute(object -> {
             if (object instanceof Room) {
                 Room room = (Room) object;

@@ -14,12 +14,12 @@ public class EventProcessorDecorator implements EventProcessor {
     }
 
     @Override
-    public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
+    public void process(SmartHome smartHome, SensorEvent sensorEvent) {
         Alarm alarm = smartHome.getAlarm();
         if (alarm.getAlarmState() && sensorEvent.getType() != SensorEventType.ALARM_DEACTIVATE) {
             alarm.enableAlert();
         } else {
-            this.eventProcessor.Process(smartHome, sensorEvent);
+            this.eventProcessor.process(smartHome, sensorEvent);
         }
     }
 }
