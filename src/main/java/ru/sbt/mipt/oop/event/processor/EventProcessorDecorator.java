@@ -6,12 +6,13 @@ import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.sensor.event.SensorEvent;
 import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
+import java.util.List;
+
 public class EventProcessorDecorator implements EventProcessor {
-    private EventProcessor eventProcessor;
+    private List<EventProcessor> processors;
 
-
-    public EventProcessorDecorator(EventProcessor eventProcessor) {
-        this.eventProcessor = eventProcessor;
+    public void setEventProcessor(List<EventProcessor> processors) {
+        this.processors = processors;
     }
 
     @Override
@@ -21,7 +22,9 @@ public class EventProcessorDecorator implements EventProcessor {
             System.out.println("Sending SMS...");
             alarm.enableAlert();
         } else {
-            this.eventProcessor.process(smartHome, sensorEvent);
+            for (EventProcessor processor : processors) {
+                processor.process(smartHome, sensorEvent);
+            }
         }
     }
 }

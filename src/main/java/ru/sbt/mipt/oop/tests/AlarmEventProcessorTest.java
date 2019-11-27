@@ -39,7 +39,9 @@ public class AlarmEventProcessorTest {
 
         SensorEvent sensorEvent = new SensorEvent(sensorEventType, "1");
         EventProcessor eventProcessor = processors.get(0);
-        new EventProcessorDecorator(eventProcessor).process(smartHome, sensorEvent);
+        EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
+        eventProcessorDecorator.setEventProcessor(processors);
+        eventProcessorDecorator.process(smartHome, sensorEvent);
         Alarm alarm = smartHome.getAlarm();
         Assert.assertTrue(alarm.getAlarmState() instanceof Activated);
     }
@@ -62,7 +64,9 @@ public class AlarmEventProcessorTest {
             sensorEventType.setCode("LTCNRHC287ENGX");
             SensorEvent sensorEvent = new SensorEvent(sensorEventType, "" + Math.random());
             EventProcessor eventProcessor = processors.get(0);
-            new EventProcessorDecorator(eventProcessor).process(smartHome, sensorEvent);
+            EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
+            eventProcessorDecorator.setEventProcessor(processors);
+            eventProcessorDecorator.process(smartHome, sensorEvent);
         }
 
         Alarm alarm = smartHome.getAlarm();
@@ -92,7 +96,9 @@ public class AlarmEventProcessorTest {
             }
             SensorEvent sensorEvent = new SensorEvent(sensorEventType, "" + counter);
             EventProcessor eventProcessor = processors.get(counter);
-            new EventProcessorDecorator(eventProcessor).process(smartHome, sensorEvent);
+            EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
+            eventProcessorDecorator.setEventProcessor(processors);
+            eventProcessorDecorator.process(smartHome, sensorEvent);
             counter++;
         }
 
