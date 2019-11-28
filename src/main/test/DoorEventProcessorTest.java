@@ -1,5 +1,3 @@
-package ru.sbt.mipt.oop.tests;
-
 import org.junit.Assert;
 import org.junit.Test;
 import ru.sbt.mipt.oop.Room;
