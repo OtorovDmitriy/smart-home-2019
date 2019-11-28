@@ -1,34 +1,30 @@
 package ru.sbt.mipt.oop;
 
-import com.coolcompany.smarthome.events.SensorEventsManager;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sbt.mipt.oop.api.SensorEventsManagerAdapter;
-import ru.sbt.mipt.oop.event_processor.*;
-import ru.sbt.mipt.oop.file_reader.FileReader;
-import ru.sbt.mipt.oop.sensor_event.SensorEventChangeState;
+import ru.sbt.mipt.oop.event.processor.*;
+import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
+import ru.sbt.mipt.oop.sensor.event.SensorEventGenerator;
+import ru.sbt.mipt.oop.sensor.event.SensorEventLoop;
+import ru.sbt.mipt.oop.additional.tools.GsonObject;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String... args) throws IOException {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "applicationContext.xml"
-        );
+    public static void main(String... args) {
+        ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
+        String JSONResult = readFromJSON.readInputData();
 
-        FileReader fileReader = context.getBean("fileReader", FileReader.class);
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
 
-        SmartHome smartHome = fileReader.executeStrategy("smart-home-1.js", SmartHome.class);
+        List<EventProcessor> processors = new ArrayList<>();
+        processors.add(new AlarmEventProcessor());
+        processors.add(new HallDoorEventProcessor());
+        processors.add(new DoorEventProcessor());
+        processors.add(new LightEventProcessor());
 
-        EventProcessorComposite eventProcessorComposite = context.getBean("eventProcessorComposite", EventProcessorComposite.class);
-        eventProcessorComposite.addProcessor(context.getBean("alarmEventProcessor", AlarmEventProcessor.class));
-        eventProcessorComposite.addProcessor(context.getBean("lightEventProcessor", LightEventProcessor.class));
-        eventProcessorComposite.addProcessor(context.getBean("doorEventProcessor", DoorEventProcessor.class));
-        List<EventProcessor> processors = eventProcessorComposite.getProcessors();
-
-
-        SensorEventsManagerAdapter sensorEventsManagerAdapter = new SensorEventsManagerAdapter(new SensorEventsManager());
-        new SensorEventChangeState().changeStateOfRoomElement(sensorEventsManagerAdapter, processors, smartHome);
+        SensorEventGenerator sensorEventGenerator = new SensorEventGenerator();
+        SensorEventLoop sensorEventLoop = new SensorEventLoop();
+        sensorEventLoop.changeStateOfRoomElement(sensorEventGenerator, processors, smartHome);
     }
 }

@@ -4,71 +4,73 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.event_processor.DoorEventProcessor;
-import ru.sbt.mipt.oop.event_processor.EventProcessor;
-import ru.sbt.mipt.oop.event_processor.EventProcessorComposite;
-import ru.sbt.mipt.oop.file_reader.FileReader;
-import ru.sbt.mipt.oop.file_reader.FileReaderJSONStrategy;
-import ru.sbt.mipt.oop.room_elements.Door;
-import ru.sbt.mipt.oop.sensor_event.SensorEvent;
+import ru.sbt.mipt.oop.additional.tools.GsonObject;
+import ru.sbt.mipt.oop.event.processor.DoorEventProcessor;
+import ru.sbt.mipt.oop.event.processor.EventProcessor;
+import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
+import ru.sbt.mipt.oop.room.elements.Door;
+import ru.sbt.mipt.oop.sensor.event.SensorEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.DOOR_CLOSED;
-import static ru.sbt.mipt.oop.sensor_event.SensorEventType.DOOR_OPEN;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.DOOR_CLOSED;
+import static ru.sbt.mipt.oop.sensor.event.SensorEventType.DOOR_OPEN;
 
 public class DoorEventProcessorTest {
 
     @Test
     public void TestDoorEventProcessorDoorOpen() throws IOException {
-        FileReaderJSONStrategy strategyJSON = new FileReaderJSONStrategy();
-        FileReader fileReader = new FileReader(strategyJSON);
-        SmartHome smartHome = fileReader.executeStrategy("smart-home-1.js", SmartHome.class);
+        ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
+        String JSONResult = readFromJSON.readInputData();
 
-        EventProcessorComposite eventProcessorComposite = new EventProcessorComposite();
-        eventProcessorComposite.addProcessor(new DoorEventProcessor());
-        List<EventProcessor> processors = eventProcessorComposite.getProcessors();
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
+
+        List<EventProcessor> processors = new ArrayList<>();
+        processors.add(new DoorEventProcessor());
 
         SensorEvent currentEvent = new SensorEvent(DOOR_OPEN, "1");
-        processors.get(0).Process(smartHome, currentEvent);
+        processors.get(0).process(smartHome, currentEvent);
 
-        boolean isOpen = false;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Door door : room.getDoors()) {
+            room.execute(doorObject -> {
+                if (!(doorObject instanceof Door)) return;
+                Door door = (Door) doorObject;
                 if (door.getId().equals("1")) {
-                    isOpen = door.isOpen();
+                    Assert.assertTrue(door.getState());
                 }
-            }
-        }
-
-        Assert.assertTrue(isOpen);
+            });
+        });
     }
 
     @Test
     public void TestDoorEventProcessorDoorClose() throws IOException {
-        FileReaderJSONStrategy strategyJSON = new FileReaderJSONStrategy();
-        FileReader fileReader = new FileReader(strategyJSON);
-        SmartHome smartHome = fileReader.executeStrategy("smart-home-1.js", SmartHome.class);
+        ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
+        String JSONResult = readFromJSON.readInputData();
 
-        EventProcessorComposite eventProcessorComposite = new EventProcessorComposite();
-        eventProcessorComposite.addProcessor(new DoorEventProcessor());
-        List<EventProcessor> processors = eventProcessorComposite.getProcessors();
+        SmartHome smartHome = GsonObject.createGsonObject(JSONResult, SmartHome.class);
+
+        List<EventProcessor> processors = new ArrayList<>();
+        processors.add(new DoorEventProcessor());
 
         SensorEvent currentEvent = new SensorEvent(DOOR_CLOSED, "1");
-        processors.get(0).Process(smartHome, currentEvent);
+        processors.get(0).process(smartHome, currentEvent);
 
-        boolean isOpen = true;
+        smartHome.execute(object -> {
+            if (!(object instanceof Room)) return;
+            Room room = (Room) object;
 
-        for (Room room : smartHome.getRooms()) {
-            for (Door door : room.getDoors()) {
+            room.execute(doorObject -> {
+                if (!(doorObject instanceof Door)) return;
+                Door door = (Door) doorObject;
                 if (door.getId().equals("1")) {
-                    isOpen = door.isOpen();
+                    Assert.assertFalse(door.getState());
                 }
-            }
-        }
-
-        Assert.assertFalse(isOpen);
+            });
+        });
     }
 }
