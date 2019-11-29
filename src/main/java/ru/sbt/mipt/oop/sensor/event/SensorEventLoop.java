@@ -1,19 +1,24 @@
 package ru.sbt.mipt.oop.sensor.event;
 
-import java.util.ArrayList;
+import ru.sbt.mipt.oop.event.processor.EventProcessor;
+import ru.sbt.mipt.oop.SmartHome;
+import ru.sbt.mipt.oop.event.processor.EventProcessorDecorator;
+
 import java.util.List;
 
 public class SensorEventLoop {
 
-    public List<SensorEvent> getSensorEventList() {
-        List<SensorEvent> sensorEventsArray = new ArrayList<>();
-        SensorEvent currentEvent = new SensorEventGenerator().getNextSensorEvent();
+    public void changeStateOfRoomElement(SensorEventGenerator sensorEventGenerator, List<EventProcessor> processors, SmartHome smartHome) {
+        SensorEvent currentEvent = sensorEventGenerator.getNextSensorEvent();
+        EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
 
         while (currentEvent != null) {
-            sensorEventsArray.add(currentEvent);
-            currentEvent = new SensorEventGenerator().getNextSensorEvent();
-        }
+            System.out.println("Got event: " + currentEvent);
 
-        return sensorEventsArray;
+            eventProcessorDecorator.setEventProcessor(processors);
+            eventProcessorDecorator.process(smartHome, currentEvent);
+
+            currentEvent = sensorEventGenerator.getNextSensorEvent();
+        }
     }
 }

@@ -1,26 +1,26 @@
 package ru.sbt.mipt.oop.event.processor;
 
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.alarm.ActivateAlarm;
-import ru.sbt.mipt.oop.alarm.DeactivateAlarm;
+import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.sensor.event.SensorEvent;
-
-import static ru.sbt.mipt.oop.sensor.event.SensorEventType.ALARM_ACTIVATE;
-import static ru.sbt.mipt.oop.sensor.event.SensorEventType.ALARM_DEACTIVATE;
+import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
 public class AlarmEventProcessor implements EventProcessor {
     @Override
-    public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
-        smartHome.execute(object -> {
-            if (!(object instanceof SmartHome)) return;
+    public void process(SmartHome smartHome, SensorEvent sensorEvent) {
 
-            if (sensorEvent.getType() == ALARM_ACTIVATE) {
-                new ActivateAlarm(smartHome, sensorEvent.getCode()).activate();
-            } else if (sensorEvent.getType() == ALARM_DEACTIVATE) {
-                new DeactivateAlarm(smartHome, sensorEvent.getCode()).activate();
-            } else {
-                return;
-            }
+        smartHome.execute(object -> {
+            if (!(object instanceof Alarm)) return;
+            Alarm alarm = (Alarm) object;
+            changeAlarmState(alarm, sensorEvent);
         });
+    }
+
+    private void changeAlarmState(Alarm alarm, SensorEvent sensorEvent) {
+        if (sensorEvent.getType() == SensorEventType.ALARM_ACTIVATE) {
+            alarm.activate();
+        } else if (sensorEvent.getType() == SensorEventType.ALARM_DEACTIVATE) {
+            alarm.deactivate();
+        }
     }
 }

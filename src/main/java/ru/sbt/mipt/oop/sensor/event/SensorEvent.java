@@ -3,17 +3,10 @@ package ru.sbt.mipt.oop.sensor.event;
 public class SensorEvent {
     private final SensorEventType type;
     private final String objectId;
-    private String code;
 
     public SensorEvent(SensorEventType type, String objectId) {
         this.type = type;
         this.objectId = objectId;
-    }
-
-    public SensorEvent(SensorEventType type, String objectId, String code) {
-        this.type = type;
-        this.objectId = objectId;
-        this.code = code;
     }
 
     public SensorEventType getType() {
@@ -24,14 +17,10 @@ public class SensorEvent {
         return objectId;
     }
 
-    public String getCode() {
-        return code;
-    }
-
     @Override
     public String toString() {
         return "SensorEvent{" +
-                " type=" + type +
+                "type=" + type +
                 ", objectId='" + objectId + '\'' +
                 '}';
     }

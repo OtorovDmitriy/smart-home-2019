@@ -7,7 +7,7 @@ import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
 public class DoorEventProcessor implements EventProcessor {
     @Override
-    public void Process(SmartHome smartHome, SensorEvent sensorEvent) {
+    public void process(SmartHome smartHome, SensorEvent sensorEvent) {
 
         smartHome.execute(object -> {
             if (!(object instanceof Door)) return;
@@ -18,11 +18,11 @@ public class DoorEventProcessor implements EventProcessor {
 
     private void changeDoorState(Door door, SensorEvent sensorEvent) {
         if (door.getId().equals(sensorEvent.getObjectId())) {
-            if (sensorEvent.getType() == SensorEventType.DOOR_OPEN) {
-                door.setOpen(true);
+            if (sensorEvent.getType() == SensorEventType.DOOR_OPEN && !door.getState()) {
+                door.changeState(true);
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was opened.");
-            } else if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED) {
-                door.setOpen(false);
+            } else if (sensorEvent.getType() == SensorEventType.DOOR_CLOSED && door.getState()) {
+                door.changeState(false);
                 System.out.println("Door " + door.getId() + " in room " + door.getId() + " was closed.");
             }
         }

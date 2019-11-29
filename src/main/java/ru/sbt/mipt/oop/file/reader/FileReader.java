@@ -1,17 +1,13 @@
 package ru.sbt.mipt.oop.file.reader;
 
-import ru.sbt.mipt.oop.SmartHome;
+class FileReader {
+    private String fileName;
 
-import java.io.IOException;
-
-public class FileReader {
-    private FileReaderStrategy fileReaderStrategy;
-
-    public FileReader (FileReaderStrategy strategy) {
-        fileReaderStrategy = strategy;
+    FileReader(String fileName) {
+        this.fileName = fileName;
     }
 
-    public SmartHome executeStrategy(String fileName, Class<SmartHome> className) throws IOException {
-        return fileReaderStrategy.getSmartHomeObj(fileName, className);
+    String getFileName() {
+        return fileName;
     }
 }
