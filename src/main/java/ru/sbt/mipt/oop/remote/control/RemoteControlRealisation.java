@@ -1,24 +1,24 @@
 package ru.sbt.mipt.oop.remote.control;
 
-import rc.RemoteControl;
-import rc.RemoteControlRegistry;
+import ru.sbt.mipt.oop.remote.control.commands.Command;
 
 import java.util.HashMap;
 
 public class RemoteControlRealisation implements RemoteControl {
-    private HashMap<String, RemoteCommand> buttonsTypeAndCode;
+    private HashMap<String, Command> remoteControlCommands;
 
-    RemoteControlRealisation(RemoteControlRegistry remoteControlRegistry) {
-        this.buttonsTypeAndCode = new HashMap<>();
+    public RemoteControlRealisation() {
+        this.remoteControlCommands = new HashMap<>();
     }
 
-    public void putRemoteCommand(String buttonType, RemoteCommand remoteCommand) {
-        buttonsTypeAndCode.put(buttonType, remoteCommand);
+    public void addRemoteControlCommands(String buttonType, Command command) {
+        remoteControlCommands.put(buttonType, command);
     }
 
     @Override
-    public void onButtonPressed(String buttonType, String rcId) {
-        RemoteCommand command = buttonsTypeAndCode.get(buttonType);
-        command.execute();
+    public void onButtonPressed(String buttonCode) {
+        if (remoteControlCommands.containsKey(buttonCode)) {
+            remoteControlCommands.get(buttonCode).execute();
+        }
     }
 }
