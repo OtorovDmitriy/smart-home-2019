@@ -3,17 +3,21 @@ package ru.sbt.mipt.oop;
 import com.coolcompany.smarthome.events.SensorEventsManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import ru.sbt.mipt.oop.additional.tools.GsonObject;
+import ru.sbt.mipt.oop.alarm.Alarm;
 import ru.sbt.mipt.oop.event.processor.*;
 import ru.sbt.mipt.oop.event.processor.adapter.CCSensorEventAdapter;
 import ru.sbt.mipt.oop.event.processor.adapter.DoorEventAdapter;
 import ru.sbt.mipt.oop.event.processor.adapter.EventHandlerAdapter;
 import ru.sbt.mipt.oop.event.processor.adapter.LightEventAdapter;
 import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
+import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
 import java.util.List;
 
 @Configuration
+@Import(SpringRemoteControl.class)
 public class SpringConfiguration {
 
     @Bean
@@ -56,6 +60,12 @@ public class SpringConfiguration {
         ReadFromJSON readFromJSON = new ReadFromJSON("smart-home-1.js");
         String JSONResult = readFromJSON.readInputData();
         return GsonObject.createGsonObject(JSONResult, SmartHome.class);
+    }
+
+    @Bean
+    Alarm alarm() {
+        SmartHome smartHome = smartHome();
+        return smartHome.getAlarm();
     }
 
     @Bean

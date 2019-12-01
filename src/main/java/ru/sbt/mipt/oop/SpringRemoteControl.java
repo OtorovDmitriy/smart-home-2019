@@ -9,11 +9,11 @@ import ru.sbt.mipt.oop.remote.control.commands.*;
 
 public class SpringRemoteControl {
     @Bean
-    RemoteControl remoteControlRealisation(TurnOnHallLight turnOnHallLight,
+    RemoteControl remoteControlRealisation(CloseHallDoor closeHallDoor,
+                                           TurnOnHallLight turnOnHallLight,
                                            TurnOnAllLight turnOnAllLight,
-                                           ActivateAlarm activateAlarm,
                                            TurnOffAllLight turnOffAllLight,
-                                           CloseHallDoor closeHallDoor,
+                                           ActivateAlarm activateAlarm,
                                            ActivateAlert activateAlert) {
         RemoteControlRealisation remoteControlRealisation = new RemoteControlRealisation();
         remoteControlRealisation.addRemoteControlCommands("A", closeHallDoor);
