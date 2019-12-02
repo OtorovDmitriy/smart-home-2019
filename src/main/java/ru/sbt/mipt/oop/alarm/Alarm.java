@@ -27,12 +27,12 @@ public class Alarm implements Actionable {
         return this.code.equals(code);
     }
 
-    public void activate() {
-        alarmState.activate();
+    public void activate(String code) {
+        alarmState.activate(code);
     }
 
-    public void deactivate() {
-        alarmState.deactivate();
+    public void deactivate(String code) {
+        alarmState.deactivate(code);
     }
 
     public void enableAlert() {

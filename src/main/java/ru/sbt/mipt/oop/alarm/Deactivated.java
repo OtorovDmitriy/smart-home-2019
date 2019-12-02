@@ -1,7 +1,5 @@
 package ru.sbt.mipt.oop.alarm;
 
-import ru.sbt.mipt.oop.sensor.event.SensorEventType;
-
 public class Deactivated implements AlarmState {
     private Alarm alarm;
 
@@ -10,17 +8,14 @@ public class Deactivated implements AlarmState {
     }
 
     @Override
-    public void activate() {
-        String tempCode = SensorEventType.ALARM_ACTIVATE.getCode();
-        if (!tempCode.isEmpty()) {
-            alarm.setCode(tempCode);
-            alarm.setAlarmState(new Activated(alarm));
-            System.out.println("Alarm activated.");
-        }
+    public void activate(String code) {
+        alarm.setCode(code);
+        alarm.setAlarmState(new Activated(alarm));
+        System.out.println("Alarm activated.");
     }
 
     @Override
-    public void deactivate() {
+    public void deactivate(String code) {
         System.out.println("Alarm is not activated.");
     }
 

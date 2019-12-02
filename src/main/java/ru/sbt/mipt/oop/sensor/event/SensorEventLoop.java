@@ -11,11 +11,11 @@ public class SensorEventLoop {
     public void changeStateOfRoomElement(SensorEventGenerator sensorEventGenerator, List<EventProcessor> processors, SmartHome smartHome) {
         SensorEvent currentEvent = sensorEventGenerator.getNextSensorEvent();
         EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
+        eventProcessorDecorator.setEventProcessor(processors);
 
         while (currentEvent != null) {
             System.out.println("Got event: " + currentEvent);
 
-            eventProcessorDecorator.setEventProcessor(processors);
             eventProcessorDecorator.process(smartHome, currentEvent);
 
             currentEvent = sensorEventGenerator.getNextSensorEvent();

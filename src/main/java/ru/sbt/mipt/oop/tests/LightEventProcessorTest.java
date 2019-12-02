@@ -9,7 +9,7 @@ import ru.sbt.mipt.oop.event.processor.EventProcessor;
 import ru.sbt.mipt.oop.event.processor.LightEventProcessor;
 import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
 import ru.sbt.mipt.oop.room.elements.Light;
-import ru.sbt.mipt.oop.sensor.event.SensorEvent;
+import ru.sbt.mipt.oop.sensor.event.SensorEventDoor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class LightEventProcessorTest {
         List<EventProcessor> processors = new ArrayList<>();
         processors.add(new LightEventProcessor());
 
-        SensorEvent currentEvent = new SensorEvent(LIGHT_ON, "1");
+        SensorEventDoor currentEvent = new SensorEventDoor(LIGHT_ON, "1");
         processors.get(0).process(smartHome, currentEvent);
 
         smartHome.execute(object -> {
@@ -57,7 +57,7 @@ public class LightEventProcessorTest {
         List<EventProcessor> processors = new ArrayList<>();
         processors.add(new LightEventProcessor());
 
-        SensorEvent currentEvent = new SensorEvent(LIGHT_OFF, "1");
+        SensorEventDoor currentEvent = new SensorEventDoor(LIGHT_OFF, "1");
         processors.get(0).process(smartHome, currentEvent);
 
         smartHome.execute(object -> {

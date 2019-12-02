@@ -8,10 +8,13 @@ public class SensorEventGenerator {
         String objectId = "" + ((int) (10 * Math.random()));
 
         if (sensorEventType.equals(SensorEventType.ALARM_ACTIVATE) || sensorEventType.equals(SensorEventType.ALARM_DEACTIVATE)) {
-            sensorEventType.setCode("LTCNRHC287ENGX");
-            return new SensorEvent(sensorEventType, objectId);
+            SensorEventAlarm sensorEventAlarm = new SensorEventAlarm(sensorEventType, objectId);
+            sensorEventAlarm.setCode("LTCNRHC287ENGX");
+            return sensorEventAlarm;
+        } else if (sensorEventType.equals(SensorEventType.DOOR_OPEN) || sensorEventType.equals(SensorEventType.DOOR_CLOSED)) {
+            return new SensorEventDoor(sensorEventType, objectId);
         } else {
-            return new SensorEvent(sensorEventType, objectId);
+            return new SensorEventLight(sensorEventType, objectId);
         }
     }
 }

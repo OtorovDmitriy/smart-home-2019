@@ -14,6 +14,8 @@ import ru.sbt.mipt.oop.event.processor.EventProcessorDecorator;
 import ru.sbt.mipt.oop.file.reader.ReadFromJSON;
 import ru.sbt.mipt.oop.room.elements.Door;
 import ru.sbt.mipt.oop.sensor.event.SensorEvent;
+import ru.sbt.mipt.oop.sensor.event.SensorEventAlarm;
+import ru.sbt.mipt.oop.sensor.event.SensorEventDoor;
 import ru.sbt.mipt.oop.sensor.event.SensorEventType;
 
 import java.io.IOException;
@@ -34,14 +36,13 @@ public class AlarmEventProcessorTest {
         List<EventProcessor> processors = new ArrayList<>();
         processors.add(new AlarmEventProcessor());
 
-        SensorEventType sensorEventType = ALARM_ACTIVATE;
-        sensorEventType.setCode("LTCNRHC287ENGX");
+        SensorEventAlarm sensorEventAlarm = new SensorEventAlarm(ALARM_ACTIVATE, "1");
+        sensorEventAlarm.setCode("LTCNRHC287ENGX");
 
-        SensorEvent sensorEvent = new SensorEvent(sensorEventType, "1");
         EventProcessor eventProcessor = processors.get(0);
         EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
         eventProcessorDecorator.setEventProcessor(processors);
-        eventProcessorDecorator.process(smartHome, sensorEvent);
+        eventProcessorDecorator.process(smartHome, sensorEventAlarm);
         Alarm alarm = smartHome.getAlarm();
         Assert.assertTrue(alarm.getAlarmState() instanceof Activated);
     }
@@ -61,12 +62,12 @@ public class AlarmEventProcessorTest {
         sensorEventTypes.add(ALARM_DEACTIVATE);
 
         for (SensorEventType sensorEventType : sensorEventTypes) {
-            sensorEventType.setCode("LTCNRHC287ENGX");
-            SensorEvent sensorEvent = new SensorEvent(sensorEventType, "" + Math.random());
+            SensorEventAlarm sensorEventAlarm = new SensorEventAlarm(sensorEventType, "" + Math.random());
+            sensorEventAlarm.setCode("LTCNRHC287ENGX");
             EventProcessor eventProcessor = processors.get(0);
             EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
             eventProcessorDecorator.setEventProcessor(processors);
-            eventProcessorDecorator.process(smartHome, sensorEvent);
+            eventProcessorDecorator.process(smartHome, sensorEventAlarm);
         }
 
         Alarm alarm = smartHome.getAlarm();
@@ -91,10 +92,14 @@ public class AlarmEventProcessorTest {
         int counter = 0;
 
         for (SensorEventType sensorEventType : sensorEventTypes) {
+            SensorEvent sensorEvent;
+
             if (sensorEventType == ALARM_ACTIVATE) {
-                sensorEventType.setCode("LTCNRHC287ENGX");
+                sensorEvent = new SensorEventAlarm(sensorEventType, "" + counter);
+                ((SensorEventAlarm) sensorEvent).setCode("LTCNRHC287ENGX");
+            } else {
+                sensorEvent = new SensorEventDoor(sensorEventType, "" + counter);
             }
-            SensorEvent sensorEvent = new SensorEvent(sensorEventType, "" + counter);
             EventProcessor eventProcessor = processors.get(counter);
             EventProcessorDecorator eventProcessorDecorator = new EventProcessorDecorator();
             eventProcessorDecorator.setEventProcessor(processors);

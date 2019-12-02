@@ -8,21 +8,21 @@ public class Alert implements AlarmState {
     }
 
     @Override
-    public void activate() {
+    public void activate(String code) {
 
     }
 
     @Override
-    public void deactivate() {
-
-    }
-
-    @Override
-    public void enableAlert() {
-        if (!alarm.checkCode("")) {
-            alarm.setAlarmState(new Activated(alarm));
-        } else {
+    public void deactivate(String code) {
+        if (alarm.checkCode(code)) {
+            alarm.setCode("");
             alarm.setAlarmState(new Deactivated(alarm));
+            System.out.println("Alarm deactivated.");
+        } else {
+            this.enableAlert();
         }
     }
+
+    @Override
+    public void enableAlert() {}
 }
