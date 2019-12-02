@@ -1,20 +1,22 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.sensor.event;
 
-public class SensorEvent {
+public class SensorEventLight implements SensorEvent {
     private final SensorEventType type;
     private final String objectId;
 
-    public SensorEvent(SensorEventType type, String objectId) {
+    public SensorEventLight(SensorEventType type, String objectId) {
         this.type = type;
         this.objectId = objectId;
     }
 
+    @Override
     public SensorEventType getType() {
-        return type;
+        return this.type;
     }
 
+    @Override
     public String getObjectId() {
-        return objectId;
+        return this.objectId;
     }
 
     @Override
